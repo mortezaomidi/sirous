@@ -1,0 +1,10 @@
+.legend {
+  width: 400px;
+  height: 600px;
+  border: 2px solid red;
+}
+
+.ui-accordion .ui-accordion-content {
+  max-height: 200px;
+  min-height: 200px;
+}

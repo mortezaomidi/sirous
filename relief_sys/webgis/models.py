@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.gis.db import models
 
 class Need(models.Model):
-    location = model.PointField()
+    location = models.PointField()
     #define shelter needs
     temporary_tent = models.PositiveSmallIntegerField(blank=True, null=True)
     permanent_tent = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -51,3 +51,4 @@ class Need(models.Model):
     shovel = models.PositiveSmallIntegerField(blank=True, null=True)
     pocket = models.PositiveSmallIntegerField(blank=True, null=True)
     hammer = models.PositiveSmallIntegerField(blank=True, null=True)
+    

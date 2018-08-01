@@ -1,0 +1,265 @@
+{% extends 'webgis/base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ block.super }}
+   {{ form.media }}
+  <script src="{% static "webgis/menu-js.js" %}"></script>
+  <link rel="stylesheet" href="{% static "webgis/webgis.css" %}">
+  <title>{% block title %} Home{% endblock %}</title>
+{% endblock %}
+
+{% block header %}
+  {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+
+
+    <!-- define legend section and sub dives -->
+   <div class="legend" id="legend">
+
+       <script>
+           $( function() {
+               $( "#tabs" ).tabs();
+               } );
+       </script>
+
+       <div id="tabs" >
+         <ul>
+           <li><a href="#tabs-1">Data entry </a></li>
+           <li><a href="#tabs-2">Tab2 </a></li>
+         </ul>
+
+   <div id="tabs-1" >
+               <script>
+                   $( function() {
+                       $( "#accordion" ).accordion();
+                           } );
+               </script>
+
+       <div id="accordion" >
+               <h3> &#9672; Shelter and clothing</h3>
+
+           <div id="shelter_cloth">
+             <p> &#9672;Tent </p>
+             {{ form.non_field_errors }}
+              <div class="Shelter">
+                  {{ form.temporary_tent.errors }}
+                  <label for="{{ form.temporary_tent.id_for_label }}">&#9662;Temporary tent:</label>
+                  {{ form.temporary_tent }}
+              </div>
+              <div class="Shelter">
+                  {{ form.permanent_tent.errors }}
+                  <label for="{{ form.permanent_tent.id_for_label }}">&#9662;Permanent tent:</label>
+                  {{ form.permanent_tent }}
+              </div>
+              <div class="Shelter">
+                  {{ form.conex.errors }}
+                  <label for="{{ form.conex.id_for_label }}">&#9662;Conex:</label>
+                  {{ form.conex }}
+              </div>
+              <p> &#9672;Clothing</p>
+              <div class="clothing">
+                  {{ form.men_pants.errors }}
+                  <label for="{{ form.men_pants.id_for_label }}">&#9662;Men pants:</label>
+                  {{ form.men_pants }}
+              </div>
+              <div class="clothing">
+                  {{ form.women_pants.errors }}
+                  <label for="{{ form.women_pants.id_for_label }}">&#9662;Women pants:</label>
+                  {{ form.women_pants }}
+              </div>
+              <div class="clothing">
+                  {{ form.child_pants.errors }}
+                  <label for="{{ form.child_pants.id_for_label }}">&#9662;Child pants:</label>
+                  {{ form.child_pants }}
+              </div>
+              <div class="clothing">
+                  {{ form.men_shirt.errors }}
+                  <label for="{{ form.men_shirt.id_for_label }}">&#9662;Men shirt:</label>
+                  {{ form.men_shirt }}
+              </div>
+              <div class="clothing">
+                  {{ form.women_shirt.errors }}
+                  <label for="{{ form.women_shirt.id_for_label }}">&#9662;Women shirt:</label>
+                  {{ form.women_shirt }}
+              </div>
+              <div class="clothing">
+                  {{ form.men_shoes.errors }}
+                  <label for="{{ form.men_shoes.id_for_label }}">&#9662;Men shoes:</label>
+                  {{ form.men_shoes }}
+              </div>
+              <div class="clothing">
+                  {{ form.women_shoes.errors }}
+                  <label for="{{ form.women_shoes.id_for_label }}">&#9662;Women shoes:</label>
+                  {{ form.women_shoes }}
+              </div>
+              <div class="clothing">
+                  {{ form.child_shoes.errors }}
+                  <label for="{{ form.child_shoes.id_for_label }}">&#9662;Child shoes:</label>
+                  {{ form.child_shoes }}
+              </div>
+              <div class="clothing">
+                  {{ form.child_pants.errors }}
+                  <label for="{{ form.child_pants.id_for_label }}">&#9662;Child pants:</label>
+                  {{ form.child_pants }}
+              </div>
+           </div>
+
+       <h3>&#9672;Flooring and bedspread</h3>
+       <div>
+
+
+         <div class="Flooring_bedspread">
+             {{ form.carpet.errors }}
+             <label for="{{ form.carpet.id_for_label }}">&#9662;Carpet:&emsp;</label>
+             {{ form.carpet }}
+         </div>
+
+         <div class="Flooring_bedspread">
+             {{ form.blanket.errors }}
+             <label for="{{ form.blanket.id_for_label }}">&#9662;Blanket:&emsp;</label>
+             {{ form.blanket }}
+         </div>
+       </div>
+
+       <h3>&#9672; Food and Drink<h3>
+           <div>
+             <div class="Food_Drink">
+                 {{ form.water.errors }}
+                 <label for="{{ form.water.id_for_label }}">&#9662;Water:&emsp;</label>
+                 {{ form.water }}
+             </div>
+             <div class="Food_Drink">
+                 {{ form.canned_food.errors }}
+                 <label for="{{ form.canned_food.id_for_label }}">&#9662;Canned_food:</label>
+                 {{ form.canned_food }}
+             </div>
+             <div class="Food_Drink">
+                 {{ form.compote_and_juice.errors }}
+                 <label for="{{ form.compote_and_juice.id_for_label }}">&#9662;Compote and juice:</label>
+                 {{ form.compote_and_juice }}
+             </div>
+           </div>
+
+           <h3> &#9672; Emergency services</h3>
+           <div>
+             <div class="emergency">
+                 {{ form.helicopter.errors }}
+                 <label for="{{ form.helicopter.id_for_label }}">&#9662;Helicopter:&emsp;</label>
+                 {{ form.helicopter }}
+             </div>
+             <div class="emergency">
+                 {{ form.ambulance.errors }}
+                 <label for="{{ form.ambulance.id_for_label }}">&#9662;Ambulance:&emsp;</label>
+                 {{ form.ambulance }}
+             </div>
+             <div class="emergency">
+                 {{ form.firefighter.errors }}
+                 <label for="{{ form.firefighter.id_for_label }}">&#9662;Firefighter:&emsp;</label>
+                 {{ form.Firefighter }}
+             </div>
+             <div class="emergency">
+                 {{ form.doctor.errors }}
+                 <label for="{{ form.doctor.id_for_label }}">&#9662;Doctor:&emsp;</label>
+                 {{ form.doctor }}
+             </div>
+             <div class="emergency">
+                 {{ form.nurse.errors }}
+                 <label for="{{ form.nurse.id_for_label }}">&#9662;Nurse:&emsp;</label>
+                 {{ form.nurse }}
+             </div>
+             <div class="emergency">
+                 {{ form.police.errors }}
+                 <label for="{{ form.police.id_for_label }}">&#9662;Police:&emsp;</label>
+                 {{ form.police }}
+             </div>
+             <div class="emergency">
+                 {{ form.voluntry_manpower.errors }}
+                 <label for="{{ form.voluntry_manpower.id_for_label }}">&#9662;Voluntry manpower:</label>
+                 {{ form.voluntry_manpower }}
+             </div>
+           </div>
+
+           <h3>&#9672;Machinery and equipment</h3>
+
+           <div>
+               <p> &#9672;Machine: </p>
+             <div class="Machinery_equipment">
+                 {{ form.crane.errors }}
+                 <label for="{{ form.crane.id_for_label }}">&#9662;Crane:&emsp;</label>
+                 {{ form.crane }}
+             </div>
+             <div class="Machinery_equipment">
+                 {{ form.excavator.errors }}
+                 <label for="{{ form.excavator.id_for_label }}">&#9662;Excavator:&emsp;</label>
+                 {{ form.excavator }}
+             </div>
+             <div class="Machinery_equipment">
+                 {{ form.bulldozer.errors }}
+                 <label for="{{ form.bulldozer.id_for_label }}">&#9662;Bulldozer:&emsp;</label>
+                 {{ form.bulldozer }}
+             </div>
+             <div class="Machinery_equipment">
+                 {{ form.truck.errors }}
+                 <label for="{{ form.truck.id_for_label }}">&#9662;Truck:&emsp;</label>
+                 {{ form.truck }}
+             </div>
+              <p> &#9672;Electric: </p>
+             <div class="Machinery_equipment">
+                 {{ form.grinder.errors }}
+                 <label for="{{ form.grinder.id_for_label }}">&#9662;Grinder:&emsp;</label>
+                 {{ form.grinder }}
+             </div>
+             <div class="Machinery_equipment">
+                 {{ form.electric_hammer.errors }}
+                 <label for="{{ form.electric_hammer.id_for_label }}">&#9662;Electric hammer:</label>
+                 {{ form.electric_hammer }}
+             </div>
+             <div class="Machinery_equipment">
+                 {{ form.electrik_driller.errors }}
+                 <label for="{{ form.electrik_driller.id_for_label }}">&#9662;Electrik driller:</label>
+                 {{ form.electrik_driller }}
+             </div>
+             <p> &#9672;Mechanical: </p>
+             <div class="Machinery_equipment">
+                 {{ form.welding_engine.errors }}
+                 <label for="{{ form.welding_engine.id_for_label }}">&#9662;Welding engine:</label>
+                 {{ form.welding_engine }}
+             </div>
+             <div class="Machinery_equipment">
+                 {{ form.gas_welding.errors }}
+                 <label for="{{ form.gas_welding.id_for_label }}">&#9662;Gas welding:</label>
+                 {{ form.gas_welding }}
+             </div>
+             <p> &#9672;Hand tools: </p>
+             <div class="Machinery_equipment">
+                 {{ form.shovel.errors }}
+                 <label for="{{ form.shovel.id_for_label }}">&#9662;Shovel:&emsp;</label>
+                 {{ form.shovel }}
+             </div>
+             <div class="Machinery_equipment">
+                 {{ form.pocket.errors }}
+                 <label for="{{ form.pocket.id_for_label }}">&#9662;Pocket:&emsp;</label>
+                 {{ form.pocket }}
+             </div>
+             <div class="Machinery_equipment">
+                 {{ form.hammer.errors }}
+                 <label for="{{ form.hammer.id_for_label }}">&#9662;Hammer:&emsp;</label>
+                 {{ form.hammer }}
+             </div>
+           </div>
+
+
+
+   <div id="tabs-2">
+
+  </div>
+
+   <div>  </div>  <!-- end tab1 div widgets-->
+
+
+
+{% endblock %}

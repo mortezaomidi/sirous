@@ -1,0 +1,42 @@
+{% extends "webgis/base.html"  %}
+{% load static %}
+
+
+{% block head %}
+    {{ block.super }}
+{% endblock%}
+
+
+
+
+
+{% block content %}
+
+        <p> <strong>User info:</strong> </p>
+
+
+
+        <ul>
+            <li>Username: {{ request.user.username.title|default:"ناشناس" }}</li>
+            <li>Email: {{ request.user.email|default:"Unknown" }}</li>
+            <li>Superuser:
+            {% ifequal request.user.is_superuser True %}
+                  Yes
+                {% else %}
+                  No
+            {% endifequal %}
+            </li>
+            <li> Staff member:
+            {% ifequal request.user.is_staff True %}
+                  Yes
+                {% else %}
+                  No
+            {% endifequal %}
+            </li>
+            <li>Registeration Date : {{ request.user.date_joined }}</li>
+            <li>Last view: {{ request.user.last_login }}</li>
+        </ul>
+  <p> To logout  <a href="{% url 'logout' %}">click here.</a>
+
+
+{% endblock %}

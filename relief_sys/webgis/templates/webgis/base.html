@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <link rel="stylesheet" href="{% static "webgis/base.css" %}">
+      <link rel="stylesheet" href="{% static "webgis/menu-style.css" %}">
+
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      
+    {% endblock %}
+  </head>
+  <body>
+
+
+    <div class="header">
+      {% block header %}
+
+       <div id='cssmenu'>
+       <ul>
+          <li><a href='#'><span>Home</span></a></li>
+          <li class='active has-sub'><a href='#'><span>Web-based GIS</span></a>
+             <!-- <ul>
+                <li class='has-sub'><a href='#'><span>Product 1</span></a>
+                   <ul>
+                      <li><a href='#'><span>Sub Product</span></a></li>
+                      <li class='last'><a href='#'><span>Sub Product</span></a></li>
+                   </ul>
+                </li>
+                <li class='has-sub'><a href='#'><span>Product 2</span></a>
+                   <ul>
+                      <li><a href='#'><span>Sub Product</span></a></li>
+                      <li class='last'><a href='#'><span>Sub Product</span></a></li>
+                   </ul>
+                </li>
+             </ul>
+          </li> -->
+          <li><a href='#'><span>Login</span></a></li>
+          <li><a href='#'><span>Register</span></a></li>
+          <li class='last'><a href='#'><span>Logout</span></a></li>
+          <li><a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+              Welcome: {{ request.user.username |title | default:"Unknown user" }}
+            </a>
+         </li>
+       </ul>
+
+       </div>
+
+
+      {% endblock %}
+    </div>
+
+
+
+    <div class="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+
+    <div class="footer">
+      {% block footer %}
+      {% endblock %}
+    </div>
+
+  </body>
+</html>
