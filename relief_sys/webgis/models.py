@@ -1,5 +1,6 @@
 from django.db import models
 
+
 from django.contrib.gis.db import models
 
 class Need(models.Model):
@@ -51,4 +52,6 @@ class Need(models.Model):
     shovel = models.PositiveSmallIntegerField(blank=True, null=True)
     pocket = models.PositiveSmallIntegerField(blank=True, null=True)
     hammer = models.PositiveSmallIntegerField(blank=True, null=True)
-    
+
+    def __str__(self):
+        return str(self.location)

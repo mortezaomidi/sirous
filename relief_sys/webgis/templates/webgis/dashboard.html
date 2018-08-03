@@ -1,0 +1,21 @@
+{% extends "webgis/base.html"  %}
+{% load static %}
+
+
+{% block head %}
+    {{ block.super }}
+    <script src="{% static "webgis/highcharts/code/highcharts.src.js" %}"></script>
+    <!-- code to include the highcharts and jQuery libraries goes here -->
+        <!-- load_charts filter takes a comma-separated list of id's where -->
+        <!-- the charts need to be rendered to                             -->
+        {% load chartit %}
+        {{ rainpivchart|load_charts:"container" }}
+{% endblock%}
+
+
+
+
+
+{% block content %}
+<div id='container'> Chart will be rendered here </div>
+{% endblock %}

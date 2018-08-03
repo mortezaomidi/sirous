@@ -3,6 +3,7 @@ from django.forms import ModelForm
 from .models import Need
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from leaflet.forms.widgets import LeafletWidget
 
 
 class SignUpForm(UserCreationForm):
@@ -42,4 +43,5 @@ class NeedForm(ModelForm):
     class Meta:
         model = Need
         fields = '__all__'
+        widgets = {'location': LeafletWidget()}
         #exclude = ['location']
