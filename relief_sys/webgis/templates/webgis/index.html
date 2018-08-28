@@ -21,11 +21,13 @@
 
 
 {% block content %}
+
   <script>
           $(document).ready(function(){
             $("#hide").click(function(){
               $(".legend").hide();
           });
+
 
           $("#show").click(function(){
               $(".legend").show();
@@ -43,11 +45,17 @@
     {% csrf_token %}
 
 <div class="map_con">
+  {% if scsess_save_message %}
+      <script> alert( '{{ scsess_save_message |capfirst }}' )</script>
+  {% endif %}
 
   <div class="location">
     {{ form.location.errors }}
     <!-- <label for="{{ form.location.id_for_label }}">&#9662;location:</label> -->
     {{ form.location }}
+
+    
+
   </div>
 </div>
 

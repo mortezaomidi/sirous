@@ -26,7 +26,8 @@ def home(request):
             # redirect to a new URL:
             message = form.cleaned_data['location']
             form.save()
-            return render(request, 'webgis/index.html', {'form': form})
+            scsess_save_message = 'your data save successfully'
+            return render(request, 'webgis/index.html', {'form': form, 'scsess_save_message' : scsess_save_message})
 
     # if a GET (or any other method) we'll create a blank form
     else:
