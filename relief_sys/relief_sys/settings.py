@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'relief_sys.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'sirous',
+        'NAME': 'sirous2',
         'USER': 'postgres',
         'PORT': '5432',
         'PASSWORD': '123456789',

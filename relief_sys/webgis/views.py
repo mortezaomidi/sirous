@@ -35,9 +35,6 @@ def home(request):
 
     return render(request, 'webgis/index.html', {'form': form})
 
-
-
-
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -52,10 +49,38 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'webgis/signup.html', {'form': form})
 
-
-
 def dashboard(request):
-    return render(request, 'webgis/dashboard.html')
+    #Step 1: Create a DataPool with the data we want to retrieve.
+    need_data = \
+    DataPool(series=[{'options': {
+    'source':Need.objects.all()},
+    'terms':[f.name for f in Need._meta.get_fields()]
+                        }
+    ])
+
+    #Step 2: Create the Chart object
+    cht = Chart(datasource=need_data, series_options=[
+    {'options' : {
+    'type': 'column',
+    'stacking': False},
+    'terms':{'conex':[
+        'men_pants', 'women_pants', 'child_pants', 'men_shirt',
+         'women_shirt', 'men_shoes', 'women_shoes', 'child_shoes', 'child_pants',
+                        ]
+                    }
+        }],
+        chart_options = {
+        'title': {
+        'text': 'data of est'
+        },
+        'xAxis':    {
+        'title':{
+        'text': 'location'
+                }
+                    }
+                        }
+    )
+    return render(request, 'webgis/dashboard.html', {'content': cht})
 
 def login(request):
     if request.user.is_authenticated():
@@ -81,45 +106,3 @@ def panel(request):
         return redirect('login')
 
     return render(request, 'webgis/panel.html')
-
-
-def rainfall_pivot_chart_view(request):
-    # Step 1: Create a PivotDataPool with the data we want to retrieve.
-    rainpivotdata = PivotDataPool(
-        series=[{
-            'options': {
-                'source': Need.objects.all(),
-                'categories': ['temporary_tent'],
-                'legend_by': 'location',
-                'top_n_per_cat': 3,
-            },
-            'terms': {
-                'avg_rain': Avg('carpet'),
-            }
-        }]
-    )
-
-    # Step 2: Create the PivotChart object
-    rainpivcht = PivotChart(
-        datasource=rainpivotdata,
-        series_options=[{
-            'options': {
-                'type': 'column',
-                'stacking': True
-            },
-            'terms': ['avg_rain']
-        }],
-        chart_options={
-            'title': {
-                'text': 'Rain by Month in top 3 cities'
-            },
-            'xAxis': {
-                'title': {
-                    'text': 'Month'
-                }
-            }
-        }
-    )
-
-    # Step 3: Send the PivotChart object to the template.
-    return render(request, 'webgis/dashboard.html', {'rainpivchart': rainpivcht})
