@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from django.contrib.gis.geos import Point
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class Unit(models.Model):
@@ -34,6 +35,7 @@ class Contributor(models.Model):
 
 class Need(models.Model):
     location = models.PointField()
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, blank=True, null = True )
     #define shelter needs
     temporary_tent = models.PositiveSmallIntegerField(blank=True, null=True)
     permanent_tent = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -86,6 +88,15 @@ class Need(models.Model):
     # def save(self, *args, **kwargs):
     #     if Need.objects.filter(unit__geom__contains=self.location):
     #         return super(Unit, self).save(*args, **kwargs)
-
     def __str__(self):
-        return "m"
+        try:
+            name = Unit.objects.get(geom__contains=self.location).name
+            return name
+        except ObjectDoesNotExist:
+            return 'شهرستان  خارج از سرپل'
+
+
+    def save(self, *args, **kwargs):
+        if not self.unit:
+            self.unit = Unit.objects.get(geom__contains=Unit.objects.get(geom__contains=self.location).geom)
+        super(Need, self).save(*args, **kwargs)
