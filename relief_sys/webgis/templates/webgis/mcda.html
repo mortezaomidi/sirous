@@ -1,0 +1,197 @@
+{% extends 'webgis/base.html' %}
+{% load static %}
+{% load leaflet_tags %}
+
+{% block head %}
+  {{ block.super }}
+   {{ form.media }}
+   {% load leaflet_tags %}
+   {% load geojson_tags %}
+   {% leaflet_js %}
+   {% leaflet_css %}
+   {% leaflet_js plugins="forms" %}
+   {% leaflet_css plugins="forms" %}
+  <script src="{% static "webgis/menu-js.js" %}"></script>
+  <link rel="stylesheet" href="{% static "webgis/webgis.css" %}">
+  <title>{% block title %} Home{% endblock %}</title>
+
+  <style>
+.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
+.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+</style>
+
+{% endblock %}
+
+{% block header %}
+  {{ block.super }}
+{% endblock %}
+
+
+{% block content %}
+<div id='map'> </div>
+
+
+  <script type="text/javascript">
+
+      function map_init_basic (map, options) {
+          // L.marker([0, 0]).addTo(map);
+          //
+          // var layer = L.geoJson();
+          // map.addLayer(layer);
+          // $.getJSON("{% url 'unit_data' %}", function (data) {
+          //     layer.addData(data);
+          // });
+          // control that shows state info on hover
+        var info = L.control();
+
+        info.onAdd = function (map) {
+          this._div = L.DomUtil.create('div', 'info');
+          this.update();
+          return this._div;
+        };
+
+        info.update = function (props) {
+          this._div.innerHTML = '<h4>Topsis Rank for</h4>' +  (props ?
+            '<b>' + props.name + '</b><br />' + props.rank + ' Topsis rank value</sup>'
+            : 'Click on map for display rank!');
+        };
+
+        info.addTo(map);
+
+          function getColor(d) {
+                  return d > 0.7 ? '#800026' :
+                         d > 0.6  ? '#BD0026' :
+                         d > 0.5  ? '#E31A1C' :
+                         d > 0.4  ? '#FC4E2A' :
+                         d > 0.3   ? '#FD8D3C' :
+                         d > 0.2   ? '#FEB24C' :
+                         d > 0.1   ? '#FED976' :
+                                    '#FFEDA0';
+              }
+
+
+          function style(feature) {
+                  return {
+                      fillColor: getColor(parseFloat(feature.properties.rank)),
+                      weight: 2,
+                      opacity: 1,
+                      color: 'white',
+                      dashArray: '3',
+                      fillOpacity: 0.7
+                  };
+              }
+
+
+          // function onEachFeature(feature, layer) {
+          //         // does this feature have a property named popupContent?
+          //         if (feature.properties && feature.properties.rank) {
+          //             layer.bindPopup(feature.properties.rank);
+          //         }
+          //     }
+
+
+
+          function highlightFeature(e) {
+        		var layer = e.target;
+
+        		layer.setStyle({
+        			weight: 5,
+        			color: '#666',
+        			dashArray: '',
+        			fillOpacity: 0.7
+        		});
+
+        		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        			layer.bringToFront();
+        		}
+
+        		info.update(layer.feature.properties);
+        	}
+
+        	var geojson;
+
+        	function resetHighlight(e) {
+        		geojson.resetStyle(e.target);
+        		info.update();
+        	}
+
+        	function zoomToFeature(e) {
+        		map.fitBounds(e.target.getBounds());
+        	}
+
+        	function onEachFeature(feature, layer) {
+        		layer.on({
+        			mouseover: highlightFeature,
+        			mouseout: resetHighlight,
+        			click: zoomToFeature
+        		});
+        	}
+
+
+
+
+          geojson = L.geoJson({{ object_list|safe}}, {
+        		style: style,
+        		onEachFeature: onEachFeature
+        	}).addTo(map);
+
+        	map.attributionControl.addAttribution('Topsis Rank &copy; <a href="http://omidipoor@ut.ac.ir">Morteza Omidipoor</a>');
+
+
+        	var legend = L.control({position: 'bottomright'});
+
+          legend.onAdd = function (map) {
+
+		var div = L.DomUtil.create('div', 'info legend'),
+			grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+			labels = [],
+			from, to;
+
+		for (var i = 0; i < grades.length; i++) {
+			from = grades[i];
+			to = grades[i + 1];
+
+			labels.push(
+				'<i style="background:' + getColor(from + 1) + '"></i> ' +
+				from + (to ? '&ndash;' + to : '+'));
+		}
+
+		div.innerHTML = labels.join('<br>');
+		return div;
+	};
+
+	legend.addTo(map);
+
+
+
+          var layer = L.geoJson();
+          map.addLayer(layer);
+          $.getJSON("{% url 'need_data' %}", function (data) {
+              layer.addData(data);
+          });
+
+
+
+
+      }
+
+  </script>
+
+  {% leaflet_map "my_map" callback="window.map_init_basic" %}
+
+
+
+
+
+{% endblock %}

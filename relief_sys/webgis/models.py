@@ -34,7 +34,7 @@ class Contributor(models.Model):
 
 
 class Need(models.Model):
-    location = models.PointField()
+    geom = models.PointField()
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, blank=True, null = True )
     #define shelter needs
     temporary_tent = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -90,7 +90,7 @@ class Need(models.Model):
     #         return super(Unit, self).save(*args, **kwargs)
     def __str__(self):
         try:
-            name = Unit.objects.get(geom__contains=self.location).name
+            name = Unit.objects.get(geom__contains=self.geom).name
             return name
         except ObjectDoesNotExist:
             return 'شهرستان  خارج از سرپل'
@@ -98,5 +98,5 @@ class Need(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.unit:
-            self.unit = Unit.objects.get(geom__contains=Unit.objects.get(geom__contains=self.location).geom)
+            self.unit = Unit.objects.get(geom__contains=Unit.objects.get(geom__contains=self.geom).geom)
         super(Need, self).save(*args, **kwargs)

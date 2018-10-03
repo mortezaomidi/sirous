@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'webgis',
     'leaflet',
+    'djgeojson',
     'chartit' ,
 ]
 

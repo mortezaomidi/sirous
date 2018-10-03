@@ -43,5 +43,5 @@ class NeedForm(ModelForm):
     class Meta:
         model = Need
         fields = '__all__'
-        widgets = {'location': LeafletWidget()}
+        widgets = {'geom': LeafletWidget()}
         #exclude = ['location']

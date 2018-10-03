@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.core.serializers import serialize
 from .forms import SignUpForm, NeedForm
 from .models import Need
+from .mcda import ranking
 
 
 from django.http import HttpResponse
@@ -106,3 +108,29 @@ def panel(request):
         return redirect('login')
 
     return render(request, 'webgis/panel.html')
+
+
+
+def mcda(request):
+    object_list = ranking()
+    return render(request, 'webgis/mcda.html', {'object_list': object_list})
+
+#     lati = Vsoil.objects.values_list('latitude',flat=True)
+# longi = Vsoil.objects.values_list('longitude',flat=True)
+# ids = Vsoil.objects.values_list('id',flat=True)
+
+# geo_json = [ {"type": "Feature",
+#                     "properties": {
+#                         "id":  ident,
+#                         "popupContent":  "id=%s" % (ident,)
+#                         },
+#                     "geometry": {
+#                         "type": "Point",
+#                         "coordinates": [lon,lat] }}
+#                     for ident,lon,lat in zip(ids,longi,lati) ]
+#
+#
+# return render_to_response('map.html',
+#                           {'geo_json': geo_json},
+#                           context_instance=RequestContext(request))
+# var geojsonFeature = {{ geo_json|safe }}
