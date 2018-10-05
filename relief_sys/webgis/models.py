@@ -41,6 +41,15 @@ class Need(models.Model):
     permanent_tent = models.PositiveSmallIntegerField(blank=True, null=True)
     conex = models.PositiveSmallIntegerField(blank=True, null=True)
 
+    def get_shelter(self):
+        a = 0
+        for i in [self.temporary_tent, self.permanent_tent, self.conex]:
+            if i:
+                a += i
+            else:
+                continue
+        return a
+
     # define clothing needs
     men_pants = models.PositiveSmallIntegerField(blank=True, null=True)
     women_pants = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -52,14 +61,41 @@ class Need(models.Model):
     child_shoes = models.PositiveSmallIntegerField(blank=True, null=True)
     child_pants = models.PositiveSmallIntegerField(blank=True, null=True)
 
+    def get_clothing(self):
+        a = 0
+        for i in  [self.men_pants , self.women_pants, self.child_pants, self.men_shirt, self.women_shirt, self.men_shoes, self.women_shoes, self.child_shoes, self.women_shoes]:
+            if i:
+                a += i
+            else:
+                continue
+        return a
+
     # define Flooring and bedspread
     carpet = models.PositiveSmallIntegerField(blank=True, null=True)
     blanket = models.PositiveSmallIntegerField(blank=True, null=True)
+
+    def get_bedspread(self):
+        a = 0
+        for i in  [self.carpet, self.blanket]:
+            if i:
+                a += i
+            else:
+                continue
+        return a
 
     # define food and drink
     water = models.PositiveSmallIntegerField(blank=True, null=True)
     canned_food = models.PositiveSmallIntegerField(blank=True, null=True)
     compote_and_juice = models.PositiveSmallIntegerField(blank=True, null=True)
+
+    def get_food(self):
+        a = 0
+        for i in  [self.water, self.canned_food, self.compote_and_juice]:
+            if i:
+                a += i
+            else:
+                continue
+        return a
 
     #define emergency services
     helicopter = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -69,6 +105,16 @@ class Need(models.Model):
     nurse = models.PositiveSmallIntegerField(blank=True, null=True)
     police = models.PositiveSmallIntegerField(blank=True, null=True)
     voluntry_manpower = models.PositiveSmallIntegerField(blank=True, null=True)
+
+    def get_emergency(self):
+        a = 0
+        for i in  [self.helicopter, self.ambulance, self.firefighter, self.doctor, self.nurse, self.police, self.voluntry_manpower]:
+            if i:
+                a += i
+            else:
+                continue
+        return a
+
 
     #define mashinary needs
     crane = models.PositiveSmallIntegerField(blank=True, null=True)
@@ -83,7 +129,15 @@ class Need(models.Model):
     shovel = models.PositiveSmallIntegerField(blank=True, null=True)
     pocket = models.PositiveSmallIntegerField(blank=True, null=True)
     hammer = models.PositiveSmallIntegerField(blank=True, null=True)
-    # unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+
+    def get_mashinary(self):
+        a = 0
+        for i in  [self.crane, self.excavator, self.bulldozer, self.truck, self.grinder, self.electric_hammer, self.electrik_driller, self.welding_engine, self.gas_welding, self.shovel, self.pocket, self.hammer]:
+            if i:
+                a += i
+            else:
+                continue
+        return a
 
     # def save(self, *args, **kwargs):
     #     if Need.objects.filter(unit__geom__contains=self.location):

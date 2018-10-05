@@ -29,6 +29,10 @@
     margin-right: 8px;
     opacity: 0.7;
 }
+
+.my_map {
+  position: relative;
+}
 </style>
 
 {% endblock %}
@@ -39,7 +43,8 @@
 
 
 {% block content %}
-<div id='map'> </div>
+
+<div id='map'></div>
 
 
   <script type="text/javascript">
@@ -188,7 +193,7 @@
 
   </script>
 
-  {% leaflet_map "my_map" callback="window.map_init_basic" %}
+{% leaflet_map "my_map" callback="window.map_init_basic" %}
 
 
 

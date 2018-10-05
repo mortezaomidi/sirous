@@ -12,6 +12,11 @@
    {% leaflet_css plugins="forms" %}
   <script src="{% static "webgis/menu-js.js" %}"></script>
   <link rel="stylesheet" href="{% static "webgis/webgis.css" %}">
+
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
   <title>{% block title %} Home{% endblock %}</title>
 {% endblock %}
 
@@ -288,7 +293,68 @@
                   </div>
           </div>
           <div id="tabs-2">
-          </div>
+            <div id="container" style="height: 400px; margin: 0 auto"></div>
+            <script type="text/javascript">
+                Highcharts.chart('container', {
+
+                  chart: {
+                      type: 'column'
+                  },
+
+                  title: {
+                      text: 'Total Needs, grouped by main categories'
+                  },
+
+                  xAxis: {
+                      categories: ['قلعه شاهين', 'بشيوه پاطاق', 'حومه سرپل', 'دشت ذهاب', 'پشت تنگ']
+                  },
+
+                  yAxis: {
+                      allowDecimals: false,
+                      min: 0,
+                      title: {
+                          text: ''
+                      }
+                  },
+
+                  tooltip: {
+                      formatter: function () {
+                          return '<b>' + this.x + '</b><br/>' +
+                              this.series.name + ': ' + this.y + '<br/>' +
+                              'Total: ' + this.point.stackTotal;
+                      }
+                  },
+
+                  plotOptions: {
+                      column: {
+                          stacking: 'normal'
+                      }
+                  },
+
+                  series: [{
+                      name: 'shelter',
+                      data: {{ chart_data.shelter }},
+                  }, {
+                      name: 'cloth',
+                      data: {{ chart_data.cloth }},
+                  }, {
+                      name: 'bedspread',
+                      data: {{ chart_data.bedspread }},
+                  }, {
+                      name: 'food',
+                      data: {{ chart_data.food }},
+                  }, {
+                    name: 'emergency',
+                    data: {{ chart_data.emergency }},
+                  }, {
+                      name: 'mashinary',
+                      data: {{ chart_data.mashinary }},
+                  }]
+              });
+
+            </script>
+
+
     </div>
   </div>
 

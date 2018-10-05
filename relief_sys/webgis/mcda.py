@@ -7,7 +7,7 @@ from .models import Need
 from .models import Unit
 
 
-    #step1.1: get ids of target units
+# step1.1: get ids of target units
 alternatives = Unit.objects.all()
 unique_alts_ids = [alt.id for alt in set(alternatives)]
     # OR target_units = Unit.objects.filter(pk__in=alternatives_ids())
@@ -22,7 +22,7 @@ def make_dm_matrix():
 
 
 
-    #step1.2: make criteria dict
+# step1.2: make criteria dict
     fields = ['temporary_tent', 'permanent_tent', 'conex', 'carpet', 'blanket', 'water']
 
     data = {}
@@ -38,7 +38,7 @@ def make_dm_matrix():
                 s = 0.0
             data[id][field] = s
 
-    #step1.3: make dm array / matrix
+# step1.3: make dm array / matrix
 
     for key, value in data.items():
         dm.append(list(data[key].values()))
@@ -136,7 +136,7 @@ def topsis(matrix, weight, norm_m, id_sol):
 def ranking():
     # step 7: ranking
     matrix = make_dm_matrix()
-    w = array([0.2, 0.1,0.1,0.6,0.01,0.3])
+    w = array([1,1,1,1,1,1])
     rank = topsis(matrix, w,norm(matrix,'l'), 'a')
     dict_data = {}
     for idx, val in enumerate(unique_alts_ids):
