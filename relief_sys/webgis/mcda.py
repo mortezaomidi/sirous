@@ -12,6 +12,70 @@ alternatives = Unit.objects.all()
 unique_alts_ids = [alt.id for alt in set(alternatives)]
     # OR target_units = Unit.objects.filter(pk__in=alternatives_ids())
 
+def new_dm():
+    u1004 = Need.objects.filter(unit__id=1004)
+    u1005 = Need.objects.filter(unit__id=1005)
+    u1020 = Need.objects.filter(unit__id=1020)
+    u1024 = Need.objects.filter(unit__id=1024)
+    u1031 =Need.objects.filter(unit__id=1031)
+
+    def sum_shelter(q):
+        a = 0
+        for i in q:
+            a += i.get_shelter()
+        return a
+
+    def sum_clothing(q):
+        a = 0
+        for i in q:
+            a += i.get_clothing()
+        return a
+
+    def sum_bedspread(q):
+        a = 0
+        for i in q:
+            a += i.get_bedspread()
+        return a
+
+    def sum_food(q):
+        a = 0
+        for i in q:
+            a += i.get_food()
+        return a
+
+    def sum_emergency(q):
+        a = 0
+        for i in q:
+            a += i.get_emergency()
+        return a
+
+    def sum_mashinary(q):
+        a = 0
+        for i in q:
+            a += i.get_mashinary()
+        return a
+
+    l = {u1004, u1005, u1020, u1024, u1031}
+    shelter = [sum_shelter(u1004), sum_shelter(u1005), sum_shelter(u1020), sum_shelter(u1024), sum_shelter(u1031)]
+    cloth = [sum_clothing(u1004), sum_clothing(u1005), sum_clothing(u1020), sum_clothing(u1024), sum_clothing(u1031)]
+    bedspread = [sum_bedspread(u1004), sum_bedspread(u1005), sum_bedspread(u1020), sum_bedspread(u1024), sum_bedspread(u1031)]
+    food = [sum_food(u1004), sum_food(u1005), sum_food(u1020), sum_food(u1024), sum_food(u1031)]
+    emergency = [sum_emergency(u1004), sum_emergency(u1005), sum_emergency(u1020), sum_emergency(u1024), sum_emergency(u1031)]
+    mashinary = [sum_mashinary(u1004), sum_mashinary(u1005), sum_mashinary(u1020), sum_mashinary(u1024), sum_mashinary(u1031)]
+    chart_data = {'shelter': shelter, 'cloth': cloth, 'bedspread': bedspread, 'food': food, 'emergency': emergency, 'mashinary': mashinary}
+
+    dm = array([shelter, cloth, bedspread, food, emergency, mashinary])
+
+    return dm
+
+
+
+
+
+
+
+
+
 # Step 1: make dm matrix
 def make_dm_matrix():
     """ a function for create DM matrix
@@ -135,9 +199,9 @@ def topsis(matrix, weight, norm_m, id_sol):
 
 def ranking():
     # step 7: ranking
-    matrix = make_dm_matrix()
-    w = array([1,1,1,1,1,1])
-    rank = topsis(matrix, w,norm(matrix,'l'), 'a')
+    matrix = new_dm()
+    w = array([0.3, 0.3, 0.1, 0.1, 0.1, 0.1])
+    rank = topsis(matrix, w, 'l', 'm')
     dict_data = {}
     for idx, val in enumerate(unique_alts_ids):
         dict_data[val] = rank[idx]

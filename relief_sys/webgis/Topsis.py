@@ -67,27 +67,27 @@ def distance(x, y, z):
     and the anti-ideal solution (di-); x is the result
     of mul_w() and y, z the results of zenith_nadir()
 	"""
-    a = array([[(x[i, j] - y[j])**2 
-		for j in range(x.shape[1])] 
+    a = array([[(x[i, j] - y[j])**2
+		for j in range(x.shape[1])]
 		for i in range(x.shape[0])])
-    b = array([[(x[i, j] - z[j])**2 
+    b = array([[(x[i, j] - z[j])**2
 		for j in range(x.shape[1])]
         for i in range(x.shape[0])])
     return (sqrt(sum(a, 1)), sqrt(sum(b, 1)))
 
 # TOPSIS method: it calls the other functions and includes
 # step 5
-def topsis(matrix, weight, norm_m, id_sol, pl):
-    """ matrix is the initial decision matrix, weight is 
-	the weights matrix, norm_m is the normalization 
-	method, id_sol is the action used, and pl is 'y' 
-	for plotting the results or any other string for 
-	not 
+def topsis(matrix, weight, norm_m, id_sol):
+    """ matrix is the initial decision matrix, weight is
+	the weights matrix, norm_m is the normalization
+	method, id_sol is the action used, and pl is 'y'
+	for plotting the results or any other string for
+	not
 	"""
     z = mul_w(weight, norm(matrix, norm_m))
     s, f = zenith_nadir(z, id_sol)
     p, n = distance(z, s, f)
-    final_s = array([n[i] / (p[i] + n[i]) 
+    final_s = array([n[i] / (p[i] + n[i])
 		for i in range(p.shape[0])])
     if pl == 'y':
         q = [i + 1 for i in range(matrix.shape[0])]
@@ -106,5 +106,5 @@ def topsis(matrix, weight, norm_m, id_sol, pl):
 # topsis(x, w, 'v', 'm', 'n')
 # stop = timeit.default_timer()
 # print("time = ", stop - start)
-# print("Closeness coefficient = ", 
+# print("Closeness coefficient = ",
 # 	topsis(x, w, 'v', 'm', 'y'))

@@ -40,6 +40,8 @@
           $("#id_location_div_map").css({"float": "none","position": "relative"});
           // $("#id_location_map").css( {"width": "unset", "height": "unset"});
 
+
+
           });
   </script>
   <input  id="hide" type="button" name="" value="<">
@@ -293,8 +295,9 @@
                   </div>
           </div>
           <div id="tabs-2">
-            <div id="container" style="height: 400px; margin: 0 auto"></div>
-            <script type="text/javascript">
+
+            <div id="container" style="height: 400px;  margin: 0 auto">
+              <script type="text/javascript">
                 Highcharts.chart('container', {
 
                   chart: {
@@ -324,13 +327,11 @@
                               'Total: ' + this.point.stackTotal;
                       }
                   },
-
                   plotOptions: {
                       column: {
                           stacking: 'normal'
                       }
                   },
-
                   series: [{
                       name: 'shelter',
                       data: {{ chart_data.shelter }},
@@ -349,11 +350,15 @@
                   }, {
                       name: 'mashinary',
                       data: {{ chart_data.mashinary }},
-                  }]
+                  },
+                {
+                  name: 'Topsis Rank',
+                  data: {{ rank.rank }}
+
+                }]
               });
-
             </script>
-
+          </div>
 
     </div>
   </div>

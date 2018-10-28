@@ -15,6 +15,8 @@ from django.contrib import messages
 from chartit import DataPool, Chart
 from django.db.models import Sum
 from chartit import PivotDataPool, PivotChart
+from numpy import array
+from .mcda import *
 
 def home(request):
     u1004 = Need.objects.filter(unit__id=1004)
@@ -67,6 +69,13 @@ def home(request):
     emergency = [sum_emergency(u1004), sum_emergency(u1005), sum_emergency(u1020), sum_emergency(u1024), sum_emergency(u1031)]
     mashinary = [sum_mashinary(u1004), sum_mashinary(u1005), sum_mashinary(u1020), sum_mashinary(u1024), sum_mashinary(u1031)]
     chart_data = {'shelter': shelter, 'cloth': cloth, 'bedspread': bedspread, 'food': food, 'emergency': emergency, 'mashinary': mashinary}
+
+    dm = array([shelter, cloth, bedspread, food, emergency, mashinary])
+    w = array([0.3, 0.3, 0.1, 0.1, 0.1, 0.1])
+    rank = topsis(dm, w, 'l', 'm')
+    rank = {'rank': list(rank)}
+
+
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -85,7 +94,7 @@ def home(request):
     else:
         form = NeedForm()
 
-    return render(request, 'webgis/index.html', {'form': form, 'chart_data': chart_data})
+    return render(request, 'webgis/index.html', {'form': form, 'chart_data': chart_data, 'rank': rank})
 
 def signup(request):
     if request.method == 'POST':
